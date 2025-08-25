@@ -45,9 +45,9 @@ declare global {
         id: string;
     }
 
-    // interface IFetchAccount {
-    //     user: IUser
-    // }
+    interface IFetchAccount {
+        user: IUser
+    }
 
     // interface IUserTable {
     //     _id: string;
