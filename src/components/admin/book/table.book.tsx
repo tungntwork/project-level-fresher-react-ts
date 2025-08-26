@@ -1,3 +1,5 @@
+import CreateBook from "@/components/admin/book/create.book";
+import DetailBook from "@/components/admin/book/detail.book";
 import { getBooksAPI } from "@/services/api";
 import { dateRangeValidate } from "@/services/helper";
 import { DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined } from "@ant-design/icons";
@@ -36,6 +38,10 @@ const TableBook = () => {
 
     const [isDeleteBook, setIsDeleteBook] = useState<boolean>(false);
     // const { message, notification } = App.useApp();
+
+    const refreshTable = () => {
+        actionRef.current?.reload();
+    }
 
     const columns: ProColumns<IBookTable>[] = [
         {
@@ -217,7 +223,7 @@ const TableBook = () => {
                 ]}
             />
 
-            {/* < DetailBook
+            < DetailBook
                 openViewDetail={openViewDetail}
                 setOpenViewDetail={setOpenViewDetail}
                 dataViewDetail={dataViewDetail}
@@ -230,7 +236,7 @@ const TableBook = () => {
                 refreshTable={refreshTable}
             />
 
-            <UpdateBook
+            {/* <UpdateBook
                 openModalUpdate={openModalUpdate}
                 setOpenModalUpdate={setOpenModalUpdate}
                 refreshTable={refreshTable}
