@@ -22,6 +22,8 @@ import ManageOrderPage from '@/pages/admin/manage.order';
 import ManageUserPage from '@/pages/admin/manage.user';
 import LayoutAdmin from '@/components/layout/layout.admin';
 import enUS from 'antd/es/locale/en_US';
+import OrderPage from '@/pages/client/order';
+import HistoryPage from '@/pages/history';
 
 const router = createBrowserRouter([
   {
@@ -33,7 +35,7 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: "/book",
+        path: "/book/:id",
         element: <BookPage />
       },
       {
@@ -41,13 +43,33 @@ const router = createBrowserRouter([
         element: <AboutPage />
       },
       {
-        path: "/checkout",
+        path: "/order",
         element: (
           <ProtectedRoute>
-            <div>checkout page</div>
+            <OrderPage />
+          </ProtectedRoute>
+        )
+      },
+      // {
+      //   path: "/about",
+      //   element: <AboutPage />,
+      // },
+      {
+        path: "/history",
+        element: (
+          <ProtectedRoute>
+            <HistoryPage />
           </ProtectedRoute>
         ),
       },
+      // {
+      //   path: "/vnpay/return-url",
+      //   element: (
+      //     <ProtectedRoute>
+      //       <ReturnURLPage />
+      //     </ProtectedRoute>
+      //   )
+      // },
     ]
   },
   {

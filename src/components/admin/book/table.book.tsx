@@ -1,10 +1,11 @@
 import CreateBook from "@/components/admin/book/create.book";
 import DetailBook from "@/components/admin/book/detail.book";
-import { getBooksAPI } from "@/services/api";
+import UpdateBook from "@/components/admin/book/update.book";
+import { deleteBookAPI, getBooksAPI } from "@/services/api";
 import { dateRangeValidate } from "@/services/helper";
 import { DeleteTwoTone, EditTwoTone, ExportOutlined, PlusOutlined } from "@ant-design/icons";
 import { ProTable, type ActionType, type ProColumns } from "@ant-design/pro-components";
-import { Button, Popconfirm } from "antd";
+import { Button, message, notification, Popconfirm } from "antd";
 import { useRef, useState } from "react";
 import { CSVLink } from "react-csv";
 
@@ -38,6 +39,21 @@ const TableBook = () => {
 
     const [isDeleteBook, setIsDeleteBook] = useState<boolean>(false);
     // const { message, notification } = App.useApp();
+
+    const handleDeleteBook = async (_id: string) => {
+        setIsDeleteBook(true)
+        const res = await deleteBookAPI(_id);
+        if (res && res.data) {
+            message.success('Xóa book thành công');
+            refreshTable();
+        } else {
+            notification.error({
+                message: 'Đã có lỗi xảy ra',
+                description: res.message
+            })
+        }
+        setIsDeleteBook(false)
+    }
 
     const refreshTable = () => {
         actionRef.current?.reload();
@@ -113,7 +129,7 @@ const TableBook = () => {
                             placement="leftTop"
                             title={"Xác nhận xóa book"}
                             description={"Bạn có chắc chắn muốn xóa book này ?"}
-                            // onConfirm={() => handleDeleteBook(entity._id)}
+                            onConfirm={() => handleDeleteBook(entity._id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                             okButtonProps={{ loading: isDeleteBook }}
@@ -236,13 +252,13 @@ const TableBook = () => {
                 refreshTable={refreshTable}
             />
 
-            {/* <UpdateBook
+            <UpdateBook
                 openModalUpdate={openModalUpdate}
                 setOpenModalUpdate={setOpenModalUpdate}
                 refreshTable={refreshTable}
                 dataUpdate={dataUpdate}
                 setDataUpdate={setDataUpdate}
-            /> */}
+            />
         </>
     )
 }

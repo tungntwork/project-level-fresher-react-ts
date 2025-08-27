@@ -9,9 +9,8 @@ import './app.header.scss';
 import { Link } from 'react-router-dom';
 import { useCurrentApp } from 'components/context/app.context';
 import { logoutAPI } from '@/services/api';
-// import { logoutAPI } from '@/services/api';
-// import ManageAccount from '../client/account';
-// import { isMobile } from 'react-device-detect';
+import ManageAccount from '../client/account';
+import { isMobile } from 'react-device-detect';
 
 interface IProps {
     searchTerm: string;
@@ -23,18 +22,21 @@ const AppHeader = (props: IProps) => {
     const [openManageAccount, setOpenManageAccount] = useState<boolean>(false);
 
     const {
-        isAuthenticated, user, setUser, setIsAuthenticated
+        isAuthenticated, user, setUser, setIsAuthenticated,
+        carts, setCarts
     } = useCurrentApp();
 
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-        // todo
-        const res = await logoutAPI()
+        //todo
+        const res = await logoutAPI();
         if (res.data) {
             setUser(null);
+            setCarts([]);
             setIsAuthenticated(false);
-            localStorage.removeItem("access_token")
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("carts");
         }
     }
 
@@ -72,7 +74,7 @@ const AppHeader = (props: IProps) => {
         return (
             <div className='pop-cart-body'>
                 <div className='pop-cart-content'>
-                    {/* {carts?.map((book, index) => {
+                    {carts?.map((book, index) => {
                         return (
                             <div className='book' key={`book-${index}`}>
                                 <img src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${book?.detail?.thumbnail}`} />
@@ -82,9 +84,9 @@ const AppHeader = (props: IProps) => {
                                 </div>
                             </div>
                         )
-                    })} */}
+                    })}
                 </div>
-                {/* {carts.length > 0 ?
+                {carts.length > 0 ?
                     <div className='pop-cart-footer'>
                         <button onClick={() => navigate('/order')}>Xem giỏ hàng</button>
                     </div>
@@ -92,7 +94,7 @@ const AppHeader = (props: IProps) => {
                     <Empty
                         description="Không có sản phẩm trong giỏ hàng"
                     />
-                } */}
+                }
             </div>
         )
     }
@@ -107,7 +109,7 @@ const AppHeader = (props: IProps) => {
                         }}>☰</div>
                         <div className='page-header__logo'>
                             <span className='logo'>
-                                <span onClick={() => navigate('/')}> <FaReact className='rotate icon-react' />Book Store</span>
+                                <span onClick={() => navigate('/')}> <FaReact className='rotate icon-react' />Hỏi Dân !T</span>
 
                                 <VscSearchFuzzy className='icon-search' />
                             </span>
@@ -123,7 +125,7 @@ const AppHeader = (props: IProps) => {
                     <nav className="page-header__bottom">
                         <ul id="navigation" className="navigation">
                             <li className="navigation__item">
-                                {/* {!isMobile
+                                {!isMobile
                                     ?
                                     <Popover
                                         className="popover-carts"
@@ -149,7 +151,7 @@ const AppHeader = (props: IProps) => {
                                     >
                                         <FiShoppingCart className='icon-cart' />
                                     </Badge>
-                                } */}
+                                }
                             </li>
                             <li className="navigation__item mobile"><Divider type='vertical' /></li>
                             <li className="navigation__item mobile">
@@ -181,10 +183,10 @@ const AppHeader = (props: IProps) => {
                 <Divider />
             </Drawer>
 
-            {/* <ManageAccount
+            <ManageAccount
                 isModalOpen={openManageAccount}
                 setIsModalOpen={setOpenManageAccount}
-            /> */}
+            />
 
         </>
     )
