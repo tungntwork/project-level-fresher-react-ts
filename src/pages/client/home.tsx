@@ -20,8 +20,8 @@ type FieldType = {
 
 
 const HomePage = () => {
-    // const [searchTerm] = useOutletContext() as any;
-    const [searchTerm] = "";
+    const [searchTerm] = useOutletContext() as any;
+    // const [searchTerm] = "";
 
     const [listCategory, setListCategory] = useState<{
         label: string, value: string
@@ -56,7 +56,7 @@ const HomePage = () => {
 
     useEffect(() => {
         fetchBook();
-    }, [current, pageSize, filter, sortQuery, ""]);
+    }, [current, pageSize, filter, sortQuery, searchTerm]);
     //searchTerm
 
     const fetchBook = async () => {
